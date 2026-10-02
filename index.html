@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcement App | Instant School & Community Updates</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <span class="text-xl font-extrabold tracking-tight">Announce<span class="gradient-text">Hub</span></span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-slate-600 dark:text-slate-300">
+                <a href="#hero" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Home</a>
+                <a href="#features" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Features</a>
+                <a href="#creators" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Creators</a>
+                <a href="#school" class="hover:text-brand-600 dark:hover:text-brand-500 transition-colors">Support</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <button id="themeToggle" class="p-2.5 rounded-full text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 focus:outline-none">
+                    <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                    <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
+                </button>
+                <button onclick="openDownloadModal()" class="gradient-bg text-white px-5 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-indigo-500/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download App</span>
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="md:hidden flex items-center space-x-3">
+                <button id="themeToggleMobile" class="p-2 rounded-lg text-slate-500 dark:text-slate-400">
+                    <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                    <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
+                </button>
+                <button id="mobileMenuBtn" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-6 space-y-3 glass-card border-t border-slate-200 dark:border-slate-800">
+            <a href="#hero" class="mobile-link block py-2 text-slate-600 dark:text-slate-300 font-medium">Home</a>
+            <a href="#features" class="mobile-link block py-2 text-slate-600 dark:text-slate-300 font-medium">Features</a>
+            <a href="#creators" class="mobile-link block py-2 text-slate-600 dark:text-slate-300 font-medium">Creators</a>
+            <a href="#school" class="mobile-link block py-2 text-slate-600 dark:text-slate-300 font-medium">Support</a>
+            <div class="pt-2">
+                <button onclick="openDownloadModal(); mobileMenu.classList.add('hidden');" class="w-full gradient-bg text-white py-3 rounded-xl font-semibold text-sm shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Options</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Text Column -->
+                <div class="space-y-6 text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 dark:bg-slate-800 text-brand-600 dark:text-indigo-400 border border-indigo-100 dark:border-slate-700 text-sm font-semibold">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 2.0 Now Available
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Never Miss an Announcement <span class="gradient-text">Ever Again.</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 max-w-xl mx-auto md:mx-0">
+                        Stay connected with real-time school notices, event updates, emergency alerts, and department announcements—all in one place.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4">
+                        <button onclick="openDownloadModal()" class="w-full sm:w-auto px-8 py-4 rounded-xl gradient-bg text-white font-bold shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] transition-all flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-download text-xl"></i>
+                            <div class="text-left">
+                                <div class="text-[10px] uppercase tracking-wider font-semibold opacity-80">Get AnnounceHub</div>
+                                <div class="text-sm font-bold leading-none">Choose Platform (Mobile / Linux)</div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="pt-6 flex items-center justify-center md:justify-start space-x-6 text-xs text-slate-500 dark:text-slate-400">
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Free & Ad-Free
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-check text-emerald-500"></i> Mobile & Linux
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-check text-emerald-500"></i> THS Approved
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phone Graphic Shell -->
+                <div class="relative flex justify-center items-center">
+                    <div class="absolute -z-10 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+                    <div class="absolute -z-10 w-60 h-60 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
+
+                    <div class="w-72 sm:w-80 h-[560px] bg-slate-900 rounded-[45px] p-3 shadow-2xl border-4 border-slate-700 relative animate-float">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-36 h-6 bg-slate-900 rounded-b-2xl z-20 flex justify-center items-center">
+                            <div class="w-3 h-3 bg-slate-800 rounded-full"></div>
+                        </div>
+                        
+                        <div class="w-full h-full bg-slate-100 dark:bg-slate-950 rounded-[35px] overflow-hidden flex flex-col pt-8">
+                            <div class="bg-indigo-600 text-white p-4 flex items-center justify-between shadow-md">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-bell"></i>
+                                    <span class="font-bold text-sm">AnnounceHub</span>
+                                </div>
+                                <i class="fa-solid fa-user-circle text-lg"></i>
+                            </div>
+
+                            <div class="p-3 space-y-3 overflow-hidden flex-1">
+                                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-3 rounded-xl text-xs">
+                                    <p class="font-bold">Welcome THS Students!</p>
+                                    <p class="text-[10px] opacity-80">Check out today's official bulletins.</p>
+                                </div>
+
+                                <div class="bg-white dark:bg-slate-900 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[9px]">EXAM ALERT</span>
+                                        <span class="text-[9px] text-slate-400">10 mins ago</span>
+                                    </div>
+                                    <p class="font-semibold text-xs text-slate-800 dark:text-slate-100">Annual Tech Fest Registration</p>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2">Register your robotics project before 5:00 PM today at the THS lab...</p>
+                                </div>
+
+                                <div class="bg-white dark:bg-slate-900 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[9px]">GENERAL</span>
+                                        <span class="text-[9px] text-slate-400">2 hrs ago</span>
+                                    </div>
+                                    <p class="font-semibold text-xs text-slate-800 dark:text-slate-100">Sports Meet Schedule Change</p>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 line-clamp-2">The inter-house volleyball matches will commence tomorrow morning...</p>
+                                </div>
+
+                                <div class="bg-white dark:bg-slate-900 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 space-y-1 opacity-70">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-[9px]">HOLIDAY</span>
+                                        <span class="text-[9px] text-slate-400">Yesterday</span>
+                                    </div>
+                                    <p class="font-semibold text-xs text-slate-800 dark:text-slate-100">Local Holiday Declaration</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-slate-100/50 dark:bg-slate-800/40 border-y border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-brand-600 dark:text-indigo-400 uppercase">Designed For Simplicity</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold">Everything You Need To Stay Informed</h3>
+                <p class="text-slate-600 dark:text-slate-400">Built specifically to solve communication gaps between schools, departments, and students.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-200 dark:border-slate-800 group">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-brand-600 dark:text-indigo-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Instant Notifications</h4>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Get push notifications instantly whenever an urgent notice or update is released by teachers.</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-200 dark:border-slate-800 group">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Smart Categorization</h4>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Filter announcements by department, exams, events, or urgent notices so you only see what matters.</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-200 dark:border-slate-800 group">
+                    <div class="w-12 h-12 rounded-xl bg-pink-100 dark:bg-pink-900/50 text-pink-600 dark:text-pink-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Clean User Interface</h4>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Minimalist and clutter-free dashboard designed for maximum readability across all screen sizes.</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-200 dark:border-slate-800 group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Offline Archiving</h4>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Read previously loaded notices even without an active internet connection on your device.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Creators Section -->
+    <section id="creators" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-brand-600 dark:text-indigo-400 uppercase">Behind The Project</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold">Meet The Creators</h3>
+                <p class="text-slate-600 dark:text-slate-400">Passionate student developers building real solutions for everyday campus communication.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800 text-center flex flex-col items-center hover:translate-y-[-4px] transition-all">
+                    <div class="w-24 h-24 rounded-full gradient-bg p-1 mb-4 shadow-md">
+                        <div class="w-full h-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex items-center justify-center">
+                            <span class="text-3xl font-bold text-slate-700 dark:text-slate-200">A</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold">Amil</h4>
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 my-2">Lead Developer</span>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">Focused on core app architecture, Linux integration, and database synchronization.</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800 text-center flex flex-col items-center hover:translate-y-[-4px] transition-all">
+                    <div class="w-24 h-24 rounded-full gradient-bg p-1 mb-4 shadow-md">
+                        <div class="w-full h-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex items-center justify-center">
+                            <span class="text-3xl font-bold text-slate-700 dark:text-slate-200">R</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold">Rithuraj</h4>
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 my-2">UI/UX & Frontend</span>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">Designed user interfaces, interactive layouts, and optimized app accessibility features.</p>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md border border-slate-200 dark:border-slate-800 text-center flex flex-col items-center hover:translate-y-[-4px] transition-all">
+                    <div class="w-24 h-24 rounded-full gradient-bg p-1 mb-4 shadow-md">
+                        <div class="w-full h-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden flex items-center justify-center">
+                            <span class="text-3xl font-bold text-slate-700 dark:text-slate-200">S</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold">Sayanth</h4>
+                    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-400 my-2">Backend & Testing</span>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">Managed real-time server connections, push notification pipelines, and quality assurance testing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- School Support Section -->
+    <section id="school" class="py-16 bg-gradient-to-br from-indigo-900 via-slate-900 to-slate-950 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-white/10 border border-white/10 rounded-3xl p-8 sm:p-12 backdrop-blur-md">
+                <div class="grid md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-3 flex justify-center">
+                        <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-4xl sm:text-5xl text-indigo-400 shadow-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                    </div>
+                    <div class="md:col-span-9 space-y-4 text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold uppercase tracking-wider">
+                            <i class="fa-solid fa-award"></i> Institutional Support
+                        </div>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold">Supported by Technical High School</h3>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            This application was developed under the guidance and technical ecosystem provided by **Technical High School**. We extend our sincere gratitude to our teachers and mentors for fostering innovation and encouraging practical software solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center text-white text-base font-bold">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <span class="text-lg font-extrabold text-white">Announce<span class="gradient-text">Hub</span></span>
+                </div>
+                
+                <p class="text-sm text-center">
+                    &copy; <span id="year"></span> Created by <span class="text-slate-200">Amil, Rithuraj & Sayanth</span>. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Platform Choice Download Modal -->
+    <div id="downloadModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 relative animate-in fade-in zoom-in duration-200">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="text-center mb-6 space-y-1">
+                <div class="w-12 h-12 rounded-2xl gradient-bg text-white mx-auto flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30 mb-3">
+                    <i class="fa-solid fa-download"></i>
+                </div>
+                <h3 class="text-2xl font-bold">Select Your Platform</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Choose your operating system to download AnnounceHub.</p>
+            </div>
+
+            <!-- Platform Switch Cards -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button id="optMobile" onclick="selectPlatform('mobile')" class="p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between border-brand-500 bg-brand-50/50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 shadow-sm relative">
+                    <div class="flex items-center justify-between mb-3">
+                        <i class="fa-brands fa-android text-2xl text-emerald-500"></i>
+                        <span id="badgeMobile" class="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] flex items-center justify-center"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm">Mobile App</div>
+                        <div class="text-[11px] opacity-75">Android APK</div>
+                    </div>
+                </button>
+
+                <button id="optLinux" onclick="selectPlatform('linux')" class="p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-600 dark:text-slate-400 relative">
+                    <div class="flex items-center justify-between mb-3">
+                        <i class="fa-brands fa-linux text-2xl text-amber-500"></i>
+                        <span id="badgeLinux" class="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] hidden items-center justify-center"><i class="fa-solid fa-check"></i></span>
+                    </div>
+                    <div>
+                        <div class="font-bold text-sm">Linux Desktop</div>
+                        <div class="text-[11px] opacity-75">.deb Package</div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Dynamic Package Details Box -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl text-xs space-y-2 border border-slate-200/60 dark:border-slate-800 mb-6">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500 dark:text-slate-400">Selected OS:</span> 
+                    <span id="modalPlatform" class="font-bold text-slate-800 dark:text-slate-100">Android Mobile</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-500 dark:text-slate-400">File Package:</span> 
+                    <span id="modalFileName" class="font-semibold text-slate-700 dark:text-slate-300 font-mono">AnnounceHub_v2.0.apk</span>
+                </div>
+                <div class="flex justify-between items-center border-t border-slate-200 dark:border-slate-700/50 pt-2">
+                    <span class="text-slate-500 dark:text-slate-400">Verified By:</span> 
+                    <span class="font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <i class="fa-solid fa-shield-halved"></i> Technical High School
+                    </span>
+                </div>
+            </div>
+
+            <!-- Direct File Trigger Download Button -->
+            <button onclick="triggerFileDownload()" id="startBtn" class="w-full gradient-bg text-white py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all flex items-center justify-center gap-2 text-sm">
+                <i class="fa-solid fa-download"></i>
+                <span id="btnText">Download Mobile APK</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Dark mode functionality
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Mobile drawer menu logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Platform Selection Logic
+        let activePlatform = 'mobile';
+
+        function openDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('hidden');
+            selectPlatform('mobile');
+        }
+
+        function closeModal() {
+            document.getElementById('downloadModal').classList.add('hidden');
+        }
+
+        function selectPlatform(platform) {
+            activePlatform = platform;
+
+            const optMobile = document.getElementById('optMobile');
+            const optLinux = document.getElementById('optLinux');
+            const badgeMobile = document.getElementById('badgeMobile');
+            const badgeLinux = document.getElementById('badgeLinux');
+
+            const modalPlatform = document.getElementById('modalPlatform');
+            const modalFileName = document.getElementById('modalFileName');
+            const btnText = document.getElementById('btnText');
+
+            if (platform === 'linux') {
+                optLinux.className = "p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between border-brand-500 bg-brand-50/50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 shadow-sm relative";
+                badgeLinux.classList.remove('hidden');
+                badgeLinux.classList.add('flex');
+
+                optMobile.className = "p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-600 dark:text-slate-400 relative";
+                badgeMobile.classList.add('hidden');
+                badgeMobile.classList.remove('flex');
+
+                modalPlatform.textContent = 'Linux Desktop (64-bit)';
+                modalFileName.textContent = 'AnnounceHub_v2.0_amd64.deb';
+                btnText.textContent = 'Download Linux Package (.deb)';
+            } else {
+                optMobile.className = "p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between border-brand-500 bg-brand-50/50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 shadow-sm relative";
+                badgeMobile.classList.remove('hidden');
+                badgeMobile.classList.add('flex');
+
+                optLinux.className = "p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between border-slate-200 dark:border-slate-800 hover:border-slate-300 text-slate-600 dark:text-slate-400 relative";
+                badgeLinux.classList.add('hidden');
+                badgeLinux.classList.remove('flex');
+
+                modalPlatform.textContent = 'Android Mobile';
+                modalFileName.textContent = 'AnnounceHub_v2.0.apk';
+                btnText.textContent = 'Download Mobile APK';
+            }
+        }
+
+        // --- ACTUAL DIRECT DOWNLOAD FUNCTION ---
+        function triggerFileDownload() {
+            const btn = document.getElementById('startBtn');
+            
+            // Paths targeting the files inside the downloads folder
+            let filePath = '';
+            let fileName = '';
+
+            if (activePlatform === 'linux') {
+                filePath = 'downloads/AnnounceHub_v2.0_amd64.deb';
+                fileName = 'AnnounceHub_v2.0_amd64.deb';
+            } else {
+                filePath = 'downloads/AnnounceHub_v2.0.apk';
+                fileName = 'AnnounceHub_v2.0.apk';
+            }
+
+            // Create temporary HTML anchor tag with download attribute (matching standard HTML download mechanics)
+            const downloadLink = document.createElement('a');
+            downloadLink.href = filePath;
+            downloadLink.download = fileName;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            // Visual UI button feedback
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Downloading File...`;
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Download Started!`;
+                btn.classList.remove('gradient-bg');
+                btn.classList.add('bg-emerald-600');
+                
+                setTimeout(() => {
+                    closeModal();
+                    btn.disabled = false;
+                    btn.classList.remove('bg-emerald-600');
+                    btn.classList.add('gradient-bg');
+                    selectPlatform(activePlatform);
+                }, 1200);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
