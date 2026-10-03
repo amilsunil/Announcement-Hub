@@ -521,47 +521,39 @@
         }
 
         // --- DIRECT GITHUB RELEASES DOWNLOAD TRIGGER ---
-        function triggerFileDownload() {
-            const btn = document.getElementById('startBtn');
-            
-            // Direct GitHub Releases URLs
-            let filePath = '';
-            let fileName = '';
+function triggerFileDownload() {
+    const btn = document.getElementById('startBtn');
+    
+    // Direct GitHub Releases URLs
+    let filePath = '';
 
-            if (activePlatform === 'linux') {
-                filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0_amd64.deb';
-                fileName = 'AnnounceHub_v2.0_amd64.deb';
-            } else {
-                filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0.apk';
-                fileName = 'AnnounceHub_v2.0.apk';
-            }
+    if (activePlatform === 'linux') {
+        filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0_amd64.deb';
+    } else {
+        filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0.apk';
+    }
 
-            // Create temporary anchor tag to initiate direct download
-            const downloadLink = document.createElement('a');
-            downloadLink.href = filePath;
-            downloadLink.download = fileName;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
+    // Direct location redirect (bypasses browser security blocks on GitHub release redirects)
+    window.location.href = filePath;
 
-            // Visual UI button feedback
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Downloading File...`;
-            btn.disabled = true;
+    // Visual UI button feedback
+    btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Downloading File...`;
+    btn.disabled = true;
 
-            setTimeout(() => {
-                btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Download Started!`;
-                btn.classList.remove('gradient-bg');
-                btn.classList.add('bg-emerald-600');
-                
-                setTimeout(() => {
-                    closeModal();
-                    btn.disabled = false;
-                    btn.classList.remove('bg-emerald-600');
-                    btn.classList.add('gradient-bg');
-                    selectPlatform(activePlatform);
-                }, 1200);
-            }, 800);
-        }
+    setTimeout(() => {
+        btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Download Started!`;
+        btn.classList.remove('gradient-bg');
+        btn.classList.add('bg-emerald-600');
+        
+        setTimeout(() => {
+            closeModal();
+            btn.disabled = false;
+            btn.classList.remove('bg-emerald-600');
+            btn.classList.add('gradient-bg');
+            selectPlatform(activePlatform);
+        }, 1200);
+    }, 800);
+}
     </script>
 </body>
 </html>
