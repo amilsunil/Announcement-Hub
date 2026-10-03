@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Announcement App | Instant School & Community Updates</title>
+    
+    <!-- Custom Browser Tab Icon (Favicon) -->
+    <link rel="icon" type="image/png" href="icon.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -516,23 +520,23 @@
             }
         }
 
-        // --- ACTUAL DIRECT DOWNLOAD FUNCTION ---
+        // --- DIRECT GITHUB RELEASES DOWNLOAD TRIGGER ---
         function triggerFileDownload() {
             const btn = document.getElementById('startBtn');
             
-            // Paths targeting the files inside the downloads folder
+            // Direct GitHub Releases URLs
             let filePath = '';
             let fileName = '';
 
             if (activePlatform === 'linux') {
-                filePath = 'downloads/AnnounceHub_v2.0_amd64.deb';
+                filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0_amd64.deb';
                 fileName = 'AnnounceHub_v2.0_amd64.deb';
             } else {
-                filePath = 'downloads/AnnounceHub_v2.0.apk';
+                filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0.apk';
                 fileName = 'AnnounceHub_v2.0.apk';
             }
 
-            // Create temporary HTML anchor tag with download attribute (matching standard HTML download mechanics)
+            // Create temporary anchor tag to initiate direct download
             const downloadLink = document.createElement('a');
             downloadLink.href = filePath;
             downloadLink.download = fileName;
