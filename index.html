@@ -520,11 +520,10 @@
             }
         }
 
-        // --- DIRECT GITHUB RELEASES DOWNLOAD TRIGGER ---
+       // --- DIRECT GITHUB RELEASES DOWNLOAD TRIGGER ---
 function triggerFileDownload() {
     const btn = document.getElementById('startBtn');
     
-    // Direct GitHub Releases URLs
     let filePath = '';
 
     if (activePlatform === 'linux') {
@@ -533,7 +532,7 @@ function triggerFileDownload() {
         filePath = 'https://github.com/amilsunil/Announcement-Hub/releases/download/v2.0.0/AnnounceHub_v2.0.apk';
     }
 
-    // Direct location redirect (bypasses browser security blocks on GitHub release redirects)
+    // Direct browser redirect to initiate download without cross-origin blocks
     window.location.href = filePath;
 
     // Visual UI button feedback
@@ -553,7 +552,7 @@ function triggerFileDownload() {
             selectPlatform(activePlatform);
         }, 1200);
     }, 800);
-}
+} 
     </script>
 </body>
 </html>
