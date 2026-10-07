@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" fill="none">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="192" y2="192" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#7C3AED" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+    
+    <!-- Shadow Effect -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Rounded Corner Square Container -->
+  <rect width="192" height="192" rx="42" fill="url(#bgGradient)" />
+
+  <!-- Bullhorn / Megaphone Icon Path -->
+  <g filter="url(#dropShadow)" fill="#FFFFFF">
+    <path d="M128 52c-2.2 0-4.3 0.9-5.8 2.5L81.2 84H56c-6.6 0-12 5.4-12 12v16c0 6.6 5.4 12 12 12h25.2l41 29.5c1.5 1.6 3.6 2.5 5.8 2.5 4.4 0 8-3.6 8-8V60c0-4.4-3.6-8-8-8zM140 76v40c6.6-3.8 11-11 11-19.2S146.6 79.8 140 76z"/>
+  </g>
+</svg>
